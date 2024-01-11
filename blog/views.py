@@ -10,7 +10,11 @@ from . models import registration
 import datetime
 
 
-# @login_required(login_url='login')
+def base(request):
+    return render(request, 'blog/base.html')
+
+
+@login_required(login_url='/')
 def home(request):
     if request.method == 'POST':
         title = request.POST['title']
@@ -43,12 +47,12 @@ def register(request):
         User.objects.create_user(
             username=username, email=email, password=password)
 
-        return redirect('login')
+        return redirect('log_in')
 
     return render(request, 'blog/register.html')
 
 
-def login(request):
+def log_in(request):
     if request.method == 'POST':
         username1 = request.POST['username']
         password1 = request.POST['password']
@@ -60,14 +64,14 @@ def login(request):
             return redirect('home')
         else:
             logout(request)
-            return redirect('login')
+            return redirect('log_in')
 
-    return render(request, 'blog/login.html')
+    return render(request, 'blog/log_in.html')
 
 
-def logout(request):
+def log_out(request):
     logout(request)
-    return redirect('login')
+    return redirect('log_in')
 
 
 def edit(request):

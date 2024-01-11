@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Login</title>
+<link rel="stylesheet" href="{% static 'blog/css/log_in.css' %}">
+{% endblock title %}
+
+{%block content%}
+<form method="POST" action="{% url 'log_in' %}">
+    {% csrf_token %}
+    <div class='centre'>
+        <ul>
+            <label>Username</label>
+            <input type='text' placeholder='username' class="box" name="username">
+        </ul>
+        <ul>
+            <label>Password</label>
+            <input type='password' placeholder='password'class='box' name="password">
+        </ul>
+        <ul>
+            <button type='submit' class='login'>LogIn</button>
+                <p style="margin-left:130px">Or</p>
+            <a class='login' href='{% url 'register' %}'>Register</a>
+        </ul>
+    </div>
+</form>
+
+{%endblock content%}

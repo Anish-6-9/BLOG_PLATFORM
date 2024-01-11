@@ -26,11 +26,11 @@
               </li>
             </ul>
             <form class="d-flex" role="search">
+              {% if user.is_authenticated %}
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-success" type="submit">Search</button>
-              <button class="btn btn-danger" type="submit">Logout</button>
-              <button style="background-color: black;" class="btn btn-primary" type="submit"><a href="{% url 'register' %}" style="text-decoration: none;">Register</a></button>
-              
+              <button class="btn btn-danger" type="submit"><a href="{% url 'log_out' %}" style="text-decoration: none;">Logout</a></button>
+              {% endif %}
             </form>
           </div>
         </div>

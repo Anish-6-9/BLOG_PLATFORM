@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Login</title>
+<link rel="stylesheet" href="{% static 'blog/css/login.css' %}">
+{% endblock title %}
+
+{%block content%}
+<div class='centre'>
+    <ul>
+        <label>Username</label>
+        <input type='text' placeholder='username' class="box">
+    </ul>
+    <ul>
+        <label>Password</label>
+        <input type='password' placeholder='password'class='box'>
+    </ul>
+    <ul>
+        <button type='submit' class='login'>LogIn</button>
+            <p style="margin-left:130px">Or</p>
+        <a class='login' href='{% url 'register' %}'>Register</a>
+    </ul>
+</div>
+
+{%endblock content%}

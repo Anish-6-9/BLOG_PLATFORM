@@ -1,0 +1,51 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    <title>Home</title>
+    <style>
+
+        .post{
+            margin: 10px 150px;
+            position: relative;
+        }
+
+
+        .fo{
+            background-color: blue;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+        }
+
+        label{
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .bu{
+            margin-left: 200px;
+        }
+
+        
+    </style>
+{% endblock title %}
+
+{% block content %}
+    <div class="post">
+        <form class="fo" action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Post title" required></input>
+
+            <label for=post">Post:</label>
+            <textarea rows="3" class="textarea" name="post" required></textarea>
+
+            <button class="bu" type="submit">Post</button>
+        </form>
+    </div>
+
+    {% for u in user %}
+        {{u.date_joined}}
+    {% endfor %}
+{% endblock content %}

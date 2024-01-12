@@ -1,0 +1,27 @@
+<!-- search_results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+
+<h2>Search Results</h2>
+
+{% if searched %}
+    <p>Showing results for: {{ searched }}</p>
+{% endif %}
+
+{% if results %}
+    <ul>
+        {% for blog_post in results %}
+            <li>{{ blog_post.username }} - {{ blog_post.created_at }}</li>
+            <!-- Add other fields as needed -->
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+
+</body>
+</html>

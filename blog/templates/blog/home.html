@@ -5,8 +5,9 @@
     <style>
 
         .post{
-            margin: 10px 150px;
-            position: relative;
+            margin: 10px 130px;
+            position: fixed;
+            width: 30%;
         }
 
 
@@ -15,7 +16,6 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 30%;
         }
 
         label{
@@ -27,25 +27,47 @@
             margin-left: 200px;
         }
 
+        .disp{
+            background-color: red;
+            width: 100%;
+            position: relative;
+            top: 10px;
+        }
+        #data{
+            margin-top: 10px;
+            background-color: yellow;
+        }
+
         
     </style>
 {% endblock title %}
 
 {% block content %}
-    <div class="post">
-        <form class="fo" action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" placeholder="Post title" required></input>
+    <div style="display: flex;">
+        <div class="post">
+            <form class="fo" action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Post title" required></input><br>
+                <label for=post">Post:</label>
 
-            <label for=post">Post:</label>
-            <textarea rows="3" class="textarea" name="post" required></textarea>
+                <textarea rows="3" class="textarea" name="post" required></textarea>
 
-            <button class="bu" type="submit">Post</button>
-        </form>
+                <button class="bu" type="submit">Post</button>
+            </form>
+        </div>
+
+        <div style="margin-left: 47%; width: 50%;">
+            {% for u in data %}
+            <div class="disp">
+                    {{u.username}}<br>
+                    {{u.created_at}}
+                        <div id="data">
+                            {{u.title}}<br>
+                            {{u.post}}
+                        </div>
+            </div><br><br>
+            {% endfor %}
+        </div>
     </div>
-
-    {% for u in user %}
-        {{u.date_joined}}
-    {% endfor %}
 {% endblock content %}

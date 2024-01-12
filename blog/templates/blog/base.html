@@ -25,12 +25,12 @@
                 <a class="nav-link  active" href="#">Profile</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              {% if user.is_authenticated %}
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex" role="search" method="GET" action="{% url 'search' %}">
+              {% csrf_token %}
+              
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
               <button class="btn btn-success" type="submit">Search</button>
               <button class="btn btn-danger" type="submit"><a href="{% url 'log_out' %}" style="text-decoration: none;">Logout</a></button>
-              {% endif %}
             </form>
           </div>
         </div>

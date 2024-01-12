@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from . models import registration
+from . models import registration, BlogPost
 
 # Create your views here.
 
@@ -12,19 +12,6 @@ import datetime
 
 def base(request):
     return render(request, 'blog/base.html')
-
-
-@login_required(login_url='/')
-def home(request):
-    if request.method == 'POST':
-        title = request.POST['title']
-        posts = request.POST['post']
-
-        print(title, posts)
-
-    user = User.objects.all()
-
-    return render(request, 'blog/home.html', {'user': user})
 
 
 def register(request):
@@ -72,6 +59,37 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect('log_in')
+
+
+@login_required(login_url='/login')
+def home(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        posts = request.POST['post']
+        username = request.user.username
+
+        user = User.objects.first()
+
+        BlogPost.objects.create(title=title, post=posts,
+                                username=username, created_by=user, created_at=datetime.datetime.now())
+
+        print(title, posts)
+
+    data = BlogPost.objects.all().order_by('created_at')
+
+    return render(request, 'blog/home.html', {'data': data})
+
+
+def searchbar(request):
+    searched = request.GET.get('search')
+
+    if searched:
+        results = BlogPost.objects.filter(
+            username__icontains=searched).order_by('created_at')
+    else:
+        results = BlogPost.objects.none()
+
+    return render(request, 'blog/search_results.html', {'results': results, 'searched': searched})
 
 
 def edit(request):

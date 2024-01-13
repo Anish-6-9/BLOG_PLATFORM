@@ -81,6 +81,7 @@ def home(request):
 
 
 def searchbar(request):
+    # for search funtionality
     searched = request.GET.get('search')
 
     if searched:
@@ -89,7 +90,7 @@ def searchbar(request):
     else:
         results = BlogPost.objects.none()
 
-    return render(request, 'blog/search_results.html', {'results': results, 'searched': searched})
+    return render(request, 'blog/home.html', {'results': results, 'searched': searched})
 
 
 def edit(request):

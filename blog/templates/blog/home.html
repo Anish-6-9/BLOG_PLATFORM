@@ -68,6 +68,29 @@
                         </div>
             </div><br><br>
             {% endfor %}
+
+            <!--for search funtionality-->
+            {% if searched %}
+                <p>Showing results for: {{searched}}</p>
+            {% else %}
+                <p>please type something to search</p>
+            {% endif %}
+            {% if results %}
+                {% for blog_post in results %}
+                    <div class="disp">
+                        {{blog_post.username}}<br>
+                        {{blog_post.created_at}}
+                        <div id="data">
+                            {{blog_post.title}}<br>
+                            {{blog_post.post}}
+                        </div>
+                    </div><br><br>
+                {% endfor %}
+            {% else %}
+                {% if searched %}
+                    <p>No results found for {{searched}}</p>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

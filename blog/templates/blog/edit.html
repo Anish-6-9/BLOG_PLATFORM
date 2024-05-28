@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    <title>Edit</title>
+{% endblock title %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="{% url 'edit' edit_profile.reference_id %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{edit_profile.username}}" required>
+
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="{{edit_profile.password}}" required>
+
+            <input type="checkbox" id="save" name="save" required>
+            <label for="save" required>save</label>
+
+            <button>submit</button>
+        </form>
+    </div>
+{% endblock content %}

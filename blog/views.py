@@ -11,7 +11,8 @@ import datetime
 
 
 def base(request):
-    return render(request, 'blog/base.html')
+    users = registration.objects.all()
+    return render(request, 'blog/base.html', {'users': users})
 
 
 def register(request):
@@ -29,8 +30,10 @@ def register(request):
 
             return render(request, 'blog/register.html', {'er': error})
 
+        user = User.objects.first()
+
         registration.objects.create(firstname=firstname, lastname=lastname, gender=gender,
-                                    username=username, email=email, password=password)
+                                    username=username, email=email, password=password, created_by=user, created_at=datetime.datetime.now())
         User.objects.create_user(
             username=username, email=email, password=password)
 
@@ -44,7 +47,7 @@ def log_in(request):
         username1 = request.POST['username']
         password1 = request.POST['password']
 
-        user = authenticate(username=username1, password=password1)
+        user = authenticate(request, username=username1, password=password1)
 
         if user:
             login(request, user)
@@ -93,5 +96,23 @@ def searchbar(request):
     return render(request, 'blog/home.html', {'results': results, 'searched': searched})
 
 
-def edit(request):
-    return render(request, 'blog/home.html')
+def profile(request):
+    username = request.user.username
+    userid = registration.objects.all()
+    user_profile = BlogPost.objects.filter(username=username).all()
+    return render(request, 'blog/profile.html', {'user_profile': user_profile, 'userid': userid})
+
+
+def edit(request, pk):
+    profile = registration.objects.get(reference_id=pk)
+    if request.method == 'POST':
+        username1 = request.POST.get('username')
+        password1 = request.POST.get('password')
+
+        registration.objects.filter(reference_id=pk).update(
+            username=username1, password=password1)
+        User.objects.filter(id=request.user.id).update(
+            username=username1)
+        return redirect('home')
+
+    return render(request, 'blog/edit.html', {'edit_profile': profile, })

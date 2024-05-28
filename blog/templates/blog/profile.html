@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Edit</title>
+    <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
+{% endblock title %}
+
+{% block content %}
+    {% for u in userid %}
+    <div class="post">
+        <p><a href="{% url 'edit' u.reference_id %}"> edit</a></p>
+    </div>
+    {% endfor %}
+    <div style="display: flex;">
+        <div style="margin-left: 47%; width: 50%;">
+        {% for u in user_profile %}
+            <div class="disp">
+                {{u.username}}<br>
+                {{u.created_at}}
+                    <div id="data">
+                        {{u.title}}<br>
+                        {{u.post}}
+                    </div>
+            </div><br><br>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
